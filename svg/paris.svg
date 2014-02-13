@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="paris.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="56.897724"
+     inkscape:cy="744.76948"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#2d2d2d;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="M 192.5 215.21875 L 191.0625 220.9375 L 187.5 228.4375 L 188.9375 232.71875 L 182.15625 325.5625 C 176.21173 349.97643 167.37754 371.03397 155.71875 388.78125 L 165.71875 389.875 C 165.71875 389.875 171.34504 372.88307 191.78125 372.71875 C 212.21746 372.55443 218.5625 389.15625 218.5625 389.15625 L 228.9375 389.15625 C 218.12384 369.41361 208.77208 348.90852 202.84375 326.65625 L 196.4375 233.0625 L 197.5 228.78125 L 193.9375 220.9375 L 192.5 215.21875 z M 191.96875 235.5625 L 193.21875 235.5625 L 197.15625 323.25 L 187.6875 323.25 L 191.96875 235.5625 z M 187.6875 327 L 197.3125 327 L 203.21875 355.9375 L 181.59375 355.9375 L 187.6875 327 z "
+       id="path3049"
+       inkscape:export-filename="C:\git\chrisdavies\img\paris.png"
+       inkscape:export-xdpi="72.141708"
+       inkscape:export-ydpi="72.141708" />
+    <path
+       style="opacity:1;fill:#2d2d2d;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 254.5625 340.71875 L 254.5625 388.1875 L 269.71875 388.1875 L 269.71875 365.96875 C 269.71875 365.96875 274.39583 357.125 278.5625 357.125 C 282.72917 357.125 287.375 365.96875 287.375 365.96875 L 287.375 388.1875 L 303.5625 388.1875 L 303.5625 340.71875 L 254.5625 340.71875 z M 287.375 388.1875 L 269.71875 388.1875 L 269.71875 388.6875 L 287.375 388.6875 L 287.375 388.1875 z "
+       id="rect3061"
+       inkscape:export-filename="C:\git\chrisdavies\img\paris.png"
+       inkscape:export-xdpi="72.141708"
+       inkscape:export-ydpi="72.141708" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer">
+    <path
+       style="fill:#2d2d2d;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="m 118.22321,320.57143 -4.65625,5.71875 0,1.78125 -0.6875,14.5 c -8.97068,2.81957 -8.08064,11.45423 -7.875,16.21875 l -4.28125,11.0625 0,18.9375 0.15625,0 0,0.25 17.5,-0.125 17.5,0.125 0,-0.25 0.1875,0 0,-18.9375 -4.28125,-11.0625 c 0.20564,-4.76452 1.09568,-13.39918 -7.875,-16.21875 l -0.6875,-14.5 0,-1.78125 -4.65625,-5.71875 -0.15625,0.25 -0.1875,-0.25 z"
+       id="path2999"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\git\chrisdavies\img\paris.png"
+       inkscape:export-xdpi="72.141708"
+       inkscape:export-ydpi="72.141708" />
+  </g>
+</svg>
