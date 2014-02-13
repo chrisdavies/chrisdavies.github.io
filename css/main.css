@@ -4,18 +4,16 @@
     color: #333;
 }
 
-h1, h2 {
-    line-height: 1.4em;
-    margin-bottom: 0.5em;
-}
-
 h1 {
     font-size: 4rem;
     line-height: 1.25em;
+    margin-bottom: 0.35em;
 }
 
 h2 {
     font-size: 2rem;
+    line-height: 1.4em;
+    margin-bottom: 0.5em;
 }
 
 p, ul {
@@ -32,7 +30,7 @@ p, ul {
 
 .nested-section {
     max-width: 800px;
-    padding: 2rem;
+    padding: 2rem 2rem 3rem;
     margin: auto;
 }
 
@@ -48,7 +46,7 @@ p, ul {
 
 .intro-alt-info {
     display: block;
-    margin: 2rem auto;
+    margin: 2rem auto 1rem;
 }
 
 .intro.loading {
