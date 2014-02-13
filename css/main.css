@@ -4,14 +4,17 @@
     color: #333;
 }
 
+h1, h2 {
+    line-height: 1.4em;
+    margin-bottom: 0.75em;
+}
+
 h1 {
     font-size: 4rem;
-    line-height: 1.5em;
 }
 
 h2 {
     font-size: 2rem;
-    line-height: 2.5em;
 }
 
 p, ul {
@@ -91,14 +94,8 @@ p, ul {
 }
 
 @media only screen and (max-width: 930px) {
-    .main-section.intro {
-        text-align: center;
-    }
-    
-    .intro-alt-info,
-    .intro-info {
-        max-width: none;
-        text-align: left;
+    .intro-alt-info {
+        max-width: 80%;
     }
     
     .main-section.links .nested-section::before {
