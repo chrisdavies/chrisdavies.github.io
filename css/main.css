@@ -6,11 +6,12 @@
 
 h1, h2 {
     line-height: 1.4em;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.5em;
 }
 
 h1 {
     font-size: 4rem;
+    line-height: 1.25em;
 }
 
 h2 {
