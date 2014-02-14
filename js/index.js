@@ -37,8 +37,7 @@
     $one('#silly-img').setAttribute('src', '/img/' + silly[index].id + '.png');
     $one('#silly-text').textContent = silly[index].text;
     $all('.loading', function (n) {
-        var classes = n.getAttribute('class');
-        n.setAttribute('class', classes.replace(/\b(loading)\b/g, ''));
+        n.classList.remove('loading');
     });
     $one('#email-me').setAttribute('href', 'mailto:' + 'ferociousturtle' + '@' + 'gmail.com');
 })();
