@@ -127,6 +127,14 @@
             margin-bottom: 1em;
         }
 
+        .instructions {
+            color: #AAA;
+            border-radius: 1em;
+            padding: 2em;
+            max-width: 15em;
+            margin: auto;
+        }
+
         .timers {
             list-style-type: none;
             margin: 0;
@@ -286,14 +294,28 @@
     </header>
     
     <div class="page-content">
-        <ul class="timers"></ul>
     </div>
 
-    <footer class="page-footer">
-        <button class="reset-timers">Reset Timers</button>
-    </footer>
-
     <script id="timers-list" type="text/html">
+        $$if length
+        <ul class="timers">
+            $$partial 'timers-list-items'
+        </ul>
+
+        <footer class="page-footer">
+            <button class="reset-timers">Reset Timers</button>
+        </footer>
+        $$else
+        <div class="instructions">
+            <p>Welcome to Time Journal. This app lets you track how much time you
+            spend doing various tasks.</p>
+            <p>To get started, click + to add a timer. Then, click a timer to start 
+            it or stop it.</p>
+        </div>
+        $$end-if
+    </script>
+
+    <script id="timers-list-items" type="text/html">
         $$for timer in this
         <li class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
             <a href="#toggle-timer" class="timer-details timer-toggle">

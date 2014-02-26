@@ -182,7 +182,7 @@
     // Initialization
     DB.load();
     
-    var timers = $('.timers'),
+    var timers = $('.page-content'),
         timersListTemplate = 'timers-list';
 
     function refreshTimers() {
@@ -331,7 +331,7 @@
         });
     });
 
-    $('.timers').on('click', '.timer-toggle', function () {
+    $('.page-content').on('click', '.timer-toggle', function () {
         var button = $(this),
             timerElement = button.closest('.timer'),
             timer = DB.Timers.byId(timerElement.data('timer'));
