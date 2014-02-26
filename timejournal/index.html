@@ -128,6 +128,12 @@
             text-align: left;
         }
 
+        .timer-details::after {
+            content: ' ';
+            display: block;
+            clear: both;
+        }
+
         .timer.active .timer-details {
             background: #808ba0;
             color: #FFF;
@@ -248,8 +254,8 @@
         $$for timer in this
         <li class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
             <a href="#toggle-timer" class="timer-details timer-toggle">
-                <span class="timer-time">{{ timer.totalSeconds :: duration }}</span>
                 <span class="timer-name">{{ timer.name }}</span>
+                <span class="timer-time">{{ timer.totalSeconds :: duration }}</span>
             </a>
             <span class="timer-options">
                 <button class="timer-edit">Edit</button>
