@@ -16,7 +16,7 @@
             font-weight: normal;
             font-style: normal;
         }
-       
+
         body {
             font-family: "Segoe UI", Verdana, Arial, sans-serif;
             font-size: 1.3em;
@@ -24,24 +24,17 @@
             color: #444;
             padding: 0;
             margin: 0;
+            background: #FFF9F9;
+            color: #444f64;
         }
 
         button {
             font-size: inherit;
-            background: #72c366;
-            color: #FFF;
+            background: transparent;
+            color: inherit;
             border: 0;
             padding: .25em 1em;
         }
-
-            button.cancel {
-                background: #AAA;
-            }
-
-            button.delete {
-                color: #ff0000;
-                background: transparent;
-            }
 
         form label {
             display: block;
@@ -49,11 +42,15 @@
 
         .page-footer,
         .page-header {
-            background: #72c366;
             margin-bottom: 0.5em;
-            color: #FFF;
             text-align: center;
             min-height: 2em;
+            padding: .5em;
+        }
+
+        .page-header {
+            position: relative;
+            border-bottom: 1px solid #e9d5d5;
         }
 
         .page-content {
@@ -61,8 +58,7 @@
         }
 
         .page-footer {
-            background: transparent;
-            border-top: 1px solid #ccd9f2;
+            border-top: 1px solid #e9d5d5;
             margin-top: 1em;
             padding-top: 1em;
         }
@@ -122,10 +118,10 @@
         .timer-details {
             display: block;
             padding: 1em;
-            background: #e5eeff;
             color: inherit;
             text-decoration: none;
             text-align: left;
+            border-bottom: 1px solid #e9d5d5;
         }
 
         .timer-details::after {
@@ -135,7 +131,7 @@
         }
 
         .timer.active .timer-details {
-            background: #808ba0;
+            background: #444f64;
             color: #FFF;
         }
 
@@ -186,7 +182,6 @@
         }
         
         .page-footer .reset-timers {
-            color: #808ba0;
             background: transparent;
         }
 
@@ -225,6 +220,21 @@
             z-index: 90;
         }
 
+        .modal button {
+            margin: 0 0.5em 0.5em 0;
+            color: #FFF;
+            background: #444f64;
+        }
+
+        .modal button.cancel {
+            background: #AAA;
+        }
+
+        .modal button.delete {
+            color: #ff0000;
+            background: transparent;
+        }
+
         .modal.open .modal-content {
             opacity: 1;
             top: 3em;
@@ -259,13 +269,15 @@
     <script id="timers-list" type="text/html">
         $$for timer in this
         <li class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
+
+            <span class="timer-options">
+                <button class="timer-edit">Edit</button>
+            </span>
+
             <a href="#toggle-timer" class="timer-details timer-toggle">
                 <span class="timer-name">{{ timer.name }}</span>
                 <span class="timer-time">{{ timer.totalSeconds :: duration }}</span>
             </a>
-            <span class="timer-options">
-                <button class="timer-edit">Edit</button>
-            </span>
         </li>
         $$end-for
     </script>
