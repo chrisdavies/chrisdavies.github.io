@@ -224,7 +224,7 @@
     }
 
     var activatedTimeout;
-    function activatedTimer() {
+    function timerActivated() {
         function refreshActiveTimers() {
             var activeTimersExist = false;
             $('.timer.active').each(function () {
@@ -242,7 +242,7 @@
         activatedTimeout = setInterval(refreshActiveTimers, 1000);
     }
 
-    activatedTimer();
+    timerActivated();
 
     $(document.body).on('click', '.delete-timer', function () {
         if (confirm('Do you want to delete this timer?')) {
@@ -339,7 +339,7 @@
 
         if (timerElement.toggleClass('active').hasClass('active')) {
             timer.start = moment();
-            activatedTimer();
+            timerActivated();
         } else {
             updateTime(timerElement);
             var end = moment(),
