@@ -144,6 +144,39 @@
     })();
 
 
+    var Modal = {
+        open: function (name, model) {
+            var promise = new oktmpl.promise();
+            oktmpl.render(name, model).then(function (html) {
+                var element = $(html),
+                    tryCount = 0;
+
+                $(document.body).append(element);
+
+                var interval = setInterval(function () {
+                    if ($('.modal').length) {
+                        clearInterval(interval);
+                        scrollTo(0, 0);
+                        element.addClass('open');
+                        promise.resolve(element);
+                    } else if (++tryCount > 5) {
+                        clearInterval(interval);
+                    }
+                }, 10);
+            });
+
+            return promise;
+        },
+
+        close: function (childElement) {
+            var modal = $(childElement).closest('.modal');
+            modal.removeClass('open');
+            setTimeout(function () {
+                modal.remove();
+            }, 500);
+        }
+    }
+
 
     // Initialization
     DB.load();
@@ -161,22 +194,6 @@
 
 
     // Interaction
-    function showModal(modalName, model) {
-        var promise = new oktmpl.promise();
-        oktmpl.render(modalName, model).then(function (html) {
-            var element = $(html);
-            $(document.body).append(element);
-
-            setTimeout(function () {
-                scrollTo(0, 0);
-                element.addClass('open');
-                promise.resolve(element);
-            }, 10);
-        });
-
-        return promise;
-    }
-
     function hideNewTimerForm() {
         $('.new-timer-form').hide()[0].reset();
         $('#new-timer').fadeIn();
@@ -195,11 +212,7 @@
     }
 
     $(document.body).on('click', '.modal .cancel', function () {
-        var modal = $(this).closest('.modal');
-        modal.removeClass('open');
-        setTimeout(function () {
-            modal.remove();
-        }, 500);
+        Modal.close(this);
     });
 
     function updateTime(timer) {
@@ -240,7 +253,7 @@
             DB.Times.removeForTimer(timer);
             DB.save();
             refreshTimers();
-            form.remove();
+            Modal.close(this);
         }
     });
 
@@ -254,7 +267,7 @@
         DB.Timers.save(timer);
         DB.save();
 
-        $(this).remove();
+        Modal.close(this);
         refreshTimers();
         return false;
     });
@@ -296,7 +309,7 @@
             var blob = new Blob([csv], { type: "text/plain;charset=utf-8" });
             saveAs(blob, "time-journal.csv");
         } else {
-            showModal('csv-results', { csv: csv }).then(function (html) {
+            Modal.open('csv-results', { csv: csv }).then(function (html) {
                 var range = document.createRange(),
                     csvNode = $('.csv-content')[0];
 
@@ -314,7 +327,7 @@
             timerElement = button.closest('.timer'),
             timer = DB.Timers.byId(timerElement.data('timer'));
 
-        showModal('edit-timer', timer || { name: '' }).then(function (html) {
+        Modal.open('edit-timer', timer || { name: '' }).then(function (html) {
             $('#timerName').focus().select();
         });
     });
