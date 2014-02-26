@@ -7,7 +7,7 @@
     <script src="js/moment.min.js"></script>
     <script src="js/foj.js"></script>
     <script src="js/oktmpl.min.js"></script>
-    <script src="js/timejournal.js"></script>
+    <script src="js/index.js"></script>
     <style>
         @font-face {
             font-family: 'fontello';
@@ -16,12 +16,14 @@
             font-weight: normal;
             font-style: normal;
         }
-          
+       
         body {
             font-family: "Segoe UI", Verdana, Arial, sans-serif;
             font-size: 1.3em;
             line-height: 1.4em;
             color: #444;
+            padding: 0;
+            margin: 0;
         }
 
         button {
@@ -43,6 +45,31 @@
 
         form label {
             display: block;
+        }
+
+        .page-footer,
+        .page-header {
+            background: #72c366;
+            margin-bottom: 0.5em;
+            color: #FFF;
+            text-align: center;
+            min-height: 2em;
+        }
+
+        .page-content {
+            padding: 1em;
+        }
+
+        .page-footer {
+            background: transparent;
+            border-top: 1px solid #ccd9f2;
+            margin-top: 1em;
+            padding-top: 1em;
+        }
+
+        .page-title {
+            display: inline-block;
+            padding: 0.3em;
         }
 
         .example {
@@ -126,16 +153,35 @@
             padding: .25em 1em;
         }
 
-        .reset-timers::before,
-        .download-csv::before {
+        .page-header .timer-add::before,
+        .page-header .download-csv::before {
             font-family: 'fontello';
             content: '\e800';
-            margin-right: 1em;
             font-size: 0.8em;
         }
 
-        .reset-timers::before {
-            content: '\e801';
+        .page-header .timer-add::before {
+            content: '\e804';
+        }
+
+        .page-header button {
+            display: inline-block;
+            width: 2em;
+            height: 2em;
+            padding: 0;
+        }
+
+        .page-header .download-csv {
+            float: right;
+        }
+        
+        .page-header .timer-add {
+            float: left;
+        }
+        
+        .page-footer .reset-timers {
+            color: #808ba0;
+            background: transparent;
         }
 
         .timer-options {
@@ -181,17 +227,22 @@
         .modal.open::before {
             opacity: 0.5;
         }
-
     </style>
 </head>
 <body>
-    <div class="page-options">
-        <button class="timer-add">+ New Timer</button>
-        <button class="download-csv">CSV</button>
-        <button class="reset-timers">Reset Timers</button>
+    <header class="page-header">
+        <button class="timer-add"></button>
+        <span class="page-title">TimeTracker</span>
+        <button class="download-csv"></button>
+    </header>
+    
+    <div class="page-content">
+        <ul class="timers"></ul>
     </div>
 
-    <ul class="timers"></ul>
+    <footer class="page-footer">
+        <button class="reset-timers">Reset Timers</button>
+    </footer>
 
     <script id="timers-list" type="text/html">
         $$for timer in this
