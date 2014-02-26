@@ -244,10 +244,17 @@
 
     timerActivated();
 
+    function formToTimer(form) {
+        return {
+            id: parseInt($('input[name=id]', form).val(), 10),
+            name: $('input[name=name]', form).val()
+        }
+    }
+
     $(document.body).on('click', '.delete-timer', function () {
         if (confirm('Do you want to delete this timer?')) {
             var form = $(this).closest('form'),
-                timer = foj(form).toObj();
+                timer = formToTimer(form);
 
             DB.Timers.remove(timer);
             DB.Times.removeForTimer(timer);
@@ -258,13 +265,12 @@
     });
 
     $(document.body).on('submit', '.timer-edit-form', function () {
-        var id = parseInt($('input[name=id]', this).val(), 10),
-            timer = DB.Timers.byId(id);
+        var timer = formToTimer(this),
+            existingTimer = DB.Timers.byId(timer.id) || timer;
 
-        timer = foj(this).toObj(timer);
-        timer.id = id;
-        timer.totalSeconds = timer.totalSeconds || 0;
-        DB.Timers.save(timer);
+        existingTimer.name = timer.name;
+        existingTimer.totalSeconds = existingTimer.totalSeconds || 0;
+        DB.Timers.save(existingTimer);
         DB.save();
 
         Modal.close(this);
@@ -323,8 +329,7 @@
     });
 
     $(document.body).on('click', '.timer-edit, .timer-add', function () {
-        var button = $(this),
-            timerElement = button.closest('.timer'),
+        var timerElement = $(this).closest('.timer'),
             timer = DB.Timers.byId(timerElement.data('timer'));
 
         Modal.open('edit-timer', timer || { name: '' }).then(function (html) {
