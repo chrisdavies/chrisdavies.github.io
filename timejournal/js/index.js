@@ -278,25 +278,6 @@
         return false;
     });
 
-    function timesToCsv() {
-        var csv = 'Name\tStart\tEnd\tElapsed Seconds\n',
-            timers = {},
-            times = DB.Times.all();
-
-        DB.Timers.all().forEach(function (timer) {
-            timers[timer.id] = timer;
-        });
-
-        for (var i = 0; i < times.length; ++i) {
-            var time = times[i],
-                timer = timers[time.timerId];
-
-            csv += [timer.name, time.start, time.end, time.elapsedSeconds].join('\t') + '\n';
-        }
-
-        return csv;
-    }
-    
     $(document.body).on('click', '.reset-timers', function () {
         DB.Timers.all().forEach(function (timer) {
             timer.totalSeconds = 0;
@@ -310,20 +291,32 @@
     });
 
     $(document.body).on('click', '.download-csv', function () {
+        function timesToCsv() {
+            var csv = 'Name\tStart\tEnd\tElapsed Seconds\n',
+                timers = {},
+                times = DB.Times.all();
+
+            DB.Timers.all().forEach(function (timer) {
+                timers[timer.id] = timer;
+            });
+
+            for (var i = 0; i < times.length; ++i) {
+                var time = times[i],
+                    timer = timers[time.timerId];
+
+                csv += [timer.name, time.start, time.end, time.elapsedSeconds].join('\t') + '\n';
+            }
+
+            return csv;
+        }
+
         var csv = timesToCsv();
         if (window.Blob && window.saveAs) {
             var blob = new Blob([csv], { type: "text/plain;charset=utf-8" });
             saveAs(blob, "time-journal.csv");
         } else {
             Modal.open('csv-results', { csv: csv }).then(function (html) {
-                var range = document.createRange(),
-                    csvNode = $('.csv-content')[0];
-
-                range.selectNodeContents(csvNode);
-
-                var sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
+                $('.csv-content').focus().select();
             });
         }        
     });

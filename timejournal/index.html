@@ -233,6 +233,12 @@
         .modal.open::before {
             opacity: 0.5;
         }
+
+        .csv-content {
+            border: 1px solid #ccd9f2;
+            width: 100%;
+            min-height: 10em;
+        }
     </style>
 </head>
 <body>
@@ -263,13 +269,13 @@
         </li>
         $$end-for
     </script>
-
+    
     <script id="csv-results" type="text/html">
         <form class="modal">
             <div class="modal-content">
                 <button class="cancel" type="reset">Close</button>
                 <label>Time-journal CSV:</label>
-                <pre class="csv-content">{{csv}}</pre>
+                <textarea cols="0" rows="0" class="csv-content">{{csv}}</textarea>
             </div>
         </form>
     </script>
