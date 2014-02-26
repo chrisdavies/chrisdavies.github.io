@@ -49,7 +49,8 @@
         }
 
         .page-header {
-            background: #e0eafc;
+            background: #8795B2;
+            color: #FFF;
             position: relative;
         }
 
@@ -115,6 +116,7 @@
             text-align: right;
             background: #fbeed8;
             border: 1px solid #f2debc;
+            position: relative;
         }
 
         .timer-details {
@@ -131,7 +133,7 @@
             clear: both;
         }
 
-        .timer.active .timer-details {
+        .timer.active {
             background: #444f64;
             color: #FFF;
         }
@@ -151,9 +153,16 @@
             padding-right: 0.5em;
         }
 
+        .timer-options {
+            position: absolute;
+            top: -0.15em;
+            right: 0;
+        }
+
         .timer-edit {
+            display: inline-block;
             font-size: 0.8em;
-            padding: .25em 1em;
+            padding: 0 0.5em 0.5em 1em;
         }
 
         .page-header .timer-add::before,
@@ -184,12 +193,6 @@
         
         .page-footer .reset-timers {
             background: transparent;
-        }
-
-        .timer-options {
-            display: inline-block;
-            vertical-align: top;
-            margin-left: 0.5em;
         }
 
         .new-timer-form {
@@ -255,7 +258,7 @@
 <body>
     <header class="page-header">
         <button class="timer-add"></button>
-        <span class="page-title">TimeTracker</span>
+        <span class="page-title">Time Journal</span>
         <button class="download-csv"></button>
     </header>
     
