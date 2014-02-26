@@ -109,6 +109,7 @@
                     }
 
                     ArrayHelper.set(db.timers, timer);
+                    db.timers.sort(function (t1, t2) { return t1.name.localeCompare(t2.name); });
                 },
 
                 remove: function (timer) {

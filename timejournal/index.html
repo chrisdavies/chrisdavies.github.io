@@ -273,15 +273,14 @@
     <script id="timers-list" type="text/html">
         $$for timer in this
         <li class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
-
-            <span class="timer-options">
-                <button class="timer-edit">Edit</button>
-            </span>
-
             <a href="#toggle-timer" class="timer-details timer-toggle">
                 <span class="timer-name">{{ timer.name }}</span>
                 <span class="timer-time">{{ timer.totalSeconds :: duration }}</span>
             </a>
+
+            <span class="timer-options">
+                <button class="timer-edit">Edit</button>
+            </span>
         </li>
         $$end-for
     </script>
