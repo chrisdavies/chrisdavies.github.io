@@ -185,9 +185,10 @@
     var timers = $('.page-content'),
         timersListTemplate = 'timers-list';
 
-    function refreshTimers() {
+    function refreshTimers(timer) {
         oktmpl.render(timersListTemplate, DB.Timers.all()).then(function (result) {
             timers.html(result);
+            timer && window.scrollTo(0, $('#timer-' + timer.id).offset().top - 100);
         });
     }
     
@@ -275,7 +276,7 @@
         DB.save();
 
         Modal.close(this);
-        refreshTimers();
+        refreshTimers(timer);
         return false;
     });
 

@@ -324,7 +324,7 @@
 
     <script id="timers-list-items" type="text/html">
         $$for timer in this
-        <li class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
+        <li id="timer-{{timer.id}}" class="timer {{ timer.start :: className('active') }}" data-timer="{{ timer.id }}">
             <a href="#toggle-timer" class="timer-details timer-toggle">
                 <span class="timer-name">{{ timer.name }}</span>
                 <span class="timer-time">{{ timer.totalSeconds :: duration }}</span>
