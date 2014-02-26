@@ -317,7 +317,7 @@
             saveAs(blob, "time-journal.csv");
         } else {
             Modal.open('csv-results', { csv: csv }).then(function (html) {
-                $('.csv-content').focus().select();
+                $('.csv-content').select();
             });
         }        
     });
