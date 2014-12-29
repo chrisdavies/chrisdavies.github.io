@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     function $one(selector) {
         return document.querySelector(selector);
     }
