@@ -29,19 +29,13 @@ p, ul {
 }
 
 .nested-section {
-    max-width: 800px;
+    max-width: 600px;
     padding: 2rem 2rem 3rem;
     margin: auto;
 }
 
 .main-section.intro {
     text-align: center;
-}
-    
-.intro-info {
-    display: inline-block;
-    max-width: none;
-    text-align: left;
 }
 
 .intro-alt-info {
@@ -53,51 +47,9 @@ p, ul {
     visibility: hidden;
 }
 
-.main-section.languages {
-    background: #F2F2F1;
-}
-    .main-section.languages .nested-section {
-        padding-bottom: 116px;
-    }
-
-.main-section.links {
-    position: relative;
-    background: #2D2D2D;
-    color: #F2F2F1;
-}
-
-.main-section.links .link-group {
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 4rem;
-}
-
-.main-section.links .em {
-    color: #BBF652;
-}
-
-.main-section.links a {
-    color: #6AC5CD;
-    text-decoration: none;
-}
-
-.main-section.links .nested-section{
-    position: relative;
-}
-
-.main-section.links .nested-section::before {
-    content: url('/img/paris.png');
-    position: absolute;
-    top: -135px;
-    right: 0;
-}
 
 @media only screen and (max-width: 930px) {
     .intro-alt-info {
         max-width: 80%;
-    }
-    
-    .main-section.links .nested-section::before {
-        right: 2rem;
     }
 }
