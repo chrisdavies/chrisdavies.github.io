@@ -59,19 +59,21 @@ input {
 }
 
 .main-content {
-  text-align: center;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
   min-height: 100%;
   height: 100%;
+  padding: 2em;
 }
 
 .profile {
-  display: inline-block;
-  text-align: left;
-  position: relative;
+  display: block;
+  text-align: center;
+  position: absolute;
   top: 50%;
+  left: 0;
+  right: 0;
   transform: translateY(-50%);
 }
 
@@ -91,6 +93,7 @@ input {
 
 .profile-pic,
 .profile-info {
+  text-align: left;
   white-space: normal;
   display: inline-block;
   vertical-align: middle;
@@ -134,3 +137,26 @@ input {
 .icon-twitter:before { content: '\e800'; } 
 .icon-github:before { content: '\e804'; }
 .icon-linkedin:before { content: '\e805'; }
+
+@media (max-width: 800px) {
+  .profile {
+    position: static;
+    text-align: center;
+    display: block;
+    top: auto;
+    transform: none;
+  }
+  
+  .profile-pic {
+    padding: 0;
+    border: 0;
+    margin: 2em 0;
+    width: auto;
+    max-height: 10em;
+  }
+  
+  .profile-info {
+    display: block;
+    text-align: center;
+  }
+}
