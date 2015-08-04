@@ -26,7 +26,6 @@
       	font: inherit;
       	vertical-align: baseline;
       }
-      /* HTML5 display-role reset for older browsers */
       article, aside, details, figcaption, figure,
       footer, header, hgroup, menu, nav, section {
       	display: block;
@@ -76,9 +75,7 @@
         box-sizing: border-box;
       }
 
-      body, html {
-        padding: 0;
-        margin: 0;
+      body {
         line-height: 1.4;
         font-family: Arial, Helvetica, sans-serif;
       }
@@ -92,30 +89,21 @@
         font-style: normal;
         font-weight: normal;
         speak: none;
-
         display: inline-block;
         text-decoration: inherit;
         width: 1em;
         margin-right: .5em;
         text-align: center;
-        /* opacity: .8; */
-
-        /* For safety - reset parent styles, that can break glyph codes*/
         font-variant: normal;
         text-transform: none;
-
-        /* Font smoothing. That was taken from TWBS */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-
-        /* Uncomment for 3D effect */
-        /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
       }
 
-      .icon-twitter:before { content: '\e800'; } /* '' */
-      .icon-menu:before { content: '\e801'; } /* '' */
-      .icon-github:before { content: '\e804'; } /* '' */
-      .icon-linkedin:before { content: '\e805'; } /* '' */
+      .icon-twitter:before { content: '\e800'; }
+      .icon-menu:before { content: '\e801'; }
+      .icon-github:before { content: '\e804'; }
+      .icon-linkedin:before { content: '\e805'; }
 
       .page-hero {
         position: relative;
@@ -126,7 +114,6 @@
       .page-title {
         font-family: 'frente_h1regular', sans-serif;
         font-size: 5em;
-        margin: 0;
       }
 
       .page-title-primary {
@@ -169,7 +156,7 @@
       .octo-container:after {
         content: '';
         position: absolute;
-        bottom: -1px;
+        bottom: -1px; /* png-generation workaround */
         left: 0;
         right: 0;
         height: 91px;
@@ -186,10 +173,6 @@
         background: none;
         border: none;
         outline: none;
-      }
-
-      .is-page-menu-trigger-active {
-        color: white;
       }
 
       .page-menu {
