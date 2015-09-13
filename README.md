@@ -1,5 +1,3 @@
 ## Christopher Davies
 
-Hoi! I'm a front end instructor at [the Iron Yard](http://theironyard.com/locations/raleigh-durham/).
-
-Hasta.
+I'm working remotely for Ruzuku. Say that three times fast.
