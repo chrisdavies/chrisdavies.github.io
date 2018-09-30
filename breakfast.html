@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Breakfast...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+  <style>
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    @font-face {
+      font-family: 'icons';
+      src: url('./font/icons.eot?62078557');
+      src: url('./font/icons.eot?62078557#iefix') format('embedded-opentype'),
+            url('./font/icons.woff?62078557') format('woff'),
+            url('./font/icons.ttf?62078557') format('truetype'),
+            url('./font/icons.svg?62078557#icons') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'frente_h1regular';
+        src: url('./font/FrenteH1-Regular-webfont.eot');
+        src: url('./font/FrenteH1-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+              url('./font/FrenteH1-Regular-webfont.woff') format('woff'),
+              url('./font/FrenteH1-Regular-webfont.ttf') format('truetype'),
+              url('./font/FrenteH1-Regular-webfont.svg#frente_h1regular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      line-height: 1.4;
+      font-family: sans-serif;
+    }
+
+    button, input, textarea {
+      font-size: inherit;
+    }
+
+    .page-hero {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: 'frente_h1regular', sans-serif;
+      font-size: 5em;
+    }
+
+    .page-title-primary {
+      text-shadow: 2px 2px #E03721;
+    }
+
+    .page-subtitle {
+      font-weight: 300;
+      font-size: 1.4em;
+      color: #E03721;
+    }
+
+    .octo-container {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      padding: 3em;
+      overflow: hidden;
+      color: #F5604C;
+
+      background: #fff8ef; /* Old browsers */
+      background: -moz-radial-gradient(center, ellipse cover,  #fff8ef 0%, #ffd38c 101%); /* FF3.6+ */
+      background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fff8ef), color-stop(101%,#ffd38c)); /* Chrome,Safari4+ */
+      background: -webkit-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* Chrome10+,Safari5.1+ */
+      background: -o-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* Opera 12+ */
+      background: -ms-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* IE10+ */
+      background: radial-gradient(ellipse at center,  #fff8ef 0%,#ffd38c 101%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff8ef', endColorstr='#ffd38c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    }
+
+    .octo-boat {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      max-height: 110%;
+      max-width: 140%;
+      transform: translate(-50%, 0);
+    }
+
+    .octo-container:after {
+      content: '';
+      position: absolute;
+      bottom: -1px; /* png-generation workaround */
+      left: 0;
+      right: 0;
+      height: 91px;
+      background: url(./img/water.png) repeat-x;
+      background-position: bottom;
+    }
+
+    @media screen and (orientation: landscape) {
+      .page-hero {
+        text-align: left;
+      }
+    }
+
+    @media screen
+      and (max-height: 568px)
+      and (orientation: landscape) {
+        .octo-container {
+          padding: 1em;
+        }
+    }
+
+    @media only screen
+      and (max-width: 568px)
+      and (orientation: portrait) {
+        .octo-container {
+          padding: 1em;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="octo-container">
+    <div class="page-hero">
+      <h1 class="page-title page-title-primary">Breakfast...</h1>
+      <p class="page-subtitle">The most important meal</p>
+    </div>
+    <img class="octo-boat" src="./img/octo-boat.svg">
+  </div>
+</body>
+</html>

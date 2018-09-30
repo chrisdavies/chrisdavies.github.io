@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Binary Clock | Loading...</title>
+</head>
+<body>
+  <style>
+    body {
+      background: #334;
+      color: #FFF;
+    }
+    
+    .binclock {
+      max-width: 136px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .binclock-hrs {
+      margin-bottom: 16px;
+    }
+    
+    .binclock-unit {
+      position: relative;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 100%;
+      display: inline-block;
+      height: 32px;
+      width: 32px;
+      transition: all 1s;
+    }
+    
+    .binclock-on {
+      border-color: #FFF;
+    }
+    </style>
+    <div class="binclock">
+      <div class="binclock-hrs">
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+      </div>
+      <div class="binclock-mins">
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+        <div class="binclock-unit"></div>
+      </div>
+    </div>
+    <script>
+    (function () {
+      const units = document.querySelectorAll('.binclock-hrs .binclock-unit');
+      const subunits = document.querySelectorAll('.binclock-mins .binclock-unit');
+
+      setTimeout(function tick() {
+        setTime();
+        setTimeout(tick, 1000);
+      });
+
+      function setTime() {
+        const now = new Date();
+        const hrs = padZeros(now.getHours());
+        const mins = padZeros(now.getMinutes());
+
+        adjustEls(units, hrs);
+        adjustEls(subunits, mins);
+
+        document.title = 'Binary Clock | ' + hrs + ':' + mins;
+      }
+
+      function padZeros(n) {
+        return ('000000' + n.toString(2)).slice(-6);
+      }
+
+      function adjustEls(els, bits) {
+        els.forEach((el, i) =>
+          el.classList.toggle('binclock-on', bits[i] === '1'));
+      }
+    }());
+    </script>
+</body>
+</html>

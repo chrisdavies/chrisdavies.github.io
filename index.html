@@ -1,280 +1,108 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Chris Davies | software architect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Christophilus</title>
+  <style>
+    body {
+      background: #334;
+      color: white;
+      font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 
-    <style>
-      html, body, div, span, applet, object, iframe,
-      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-      a, abbr, acronym, address, big, cite, code,
-      del, dfn, em, img, ins, kbd, q, s, samp,
-      small, strike, strong, sub, sup, tt, var,
-      b, u, i, center,
-      dl, dt, dd, ol, ul, li,
-      fieldset, form, label, legend,
-      table, caption, tbody, tfoot, thead, tr, th, td,
-      article, aside, canvas, details, embed,
-      figure, figcaption, footer, header, hgroup,
-      menu, nav, output, ruby, section, summary,
-      time, mark, audio, video {
-      	margin: 0;
-      	padding: 0;
-      	border: 0;
-      	font-size: 100%;
-      	font: inherit;
-      	vertical-align: baseline;
-      }
-      article, aside, details, figcaption, figure,
-      footer, header, hgroup, menu, nav, section {
-      	display: block;
-      }
-      body {
-      	line-height: 1;
-      }
-      ol, ul {
-      	list-style: none;
-      }
-      blockquote, q {
-      	quotes: none;
-      }
-      blockquote:before, blockquote:after,
-      q:before, q:after {
-      	content: '';
-      	content: none;
-      }
-      table {
-      	border-collapse: collapse;
-      	border-spacing: 0;
-      }
+    .title {
+      position: relative;
+      font-size: 2em;
+      font-weight: 200;
+      text-align: center;
+    }
 
-      @font-face {
-        font-family: 'icons';
-        src: url('./font/icons.eot?62078557');
-        src: url('./font/icons.eot?62078557#iefix') format('embedded-opentype'),
-             url('./font/icons.woff?62078557') format('woff'),
-             url('./font/icons.ttf?62078557') format('truetype'),
-             url('./font/icons.svg?62078557#icons') format('svg');
-        font-weight: normal;
-        font-style: normal;
+    .title-char {
+      position: relative;
+      display: inline-block;
+      white-space: pre;
+      animation: slide-in 0.75s cubic-bezier(0.895, 0.03, 0.685, 0.22) forwards;
+    }
+
+    .main {
+      margin-top: calc(50vh - 1em);
+    }
+
+    .page-links {
+      max-width: 400px;
+      margin: auto;
+      text-align: center;
+      /* animation: slide-in 0.75s cubic-bezier(0.895, 0.03, 0.685, 0.22) forwards; */
+      animation: slide-up 0.75s ease-in forwards;
+    }
+
+    .page-link,
+    .page-link:visited {
+      display: inline-block;
+      margin: 0 4px;
+      color: inherit;
+    }
+
+    @keyframes slide-in {
+      100% {
+        filter: blur(0);
+        transform: scale(1);
+        transform: translate(0, 0);
       }
+    }
 
-      @font-face {
-          font-family: 'frente_h1regular';
-          src: url('./font/FrenteH1-Regular-webfont.eot');
-          src: url('./font/FrenteH1-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-               url('./font/FrenteH1-Regular-webfont.woff') format('woff'),
-               url('./font/FrenteH1-Regular-webfont.ttf') format('truetype'),
-               url('./font/FrenteH1-Regular-webfont.svg#frente_h1regular') format('svg');
-          font-weight: normal;
-          font-style: normal;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        line-height: 1.4;
-        font-family: sans-serif;
-      }
-
-      button, input, textarea {
-        font-size: inherit;
-      }
-
-      [class^="icon-"]:before, [class*=" icon-"]:before {
-        font-family: "icons";
-        font-style: normal;
-        font-weight: normal;
-        speak: none;
-        display: inline-block;
-        text-decoration: inherit;
-        width: 1em;
-        margin-right: .5em;
-        text-align: center;
-        font-variant: normal;
-        text-transform: none;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      .icon-linkedin:before { content: '\e800'; }
-      .icon-twitter:before { content: '\e801'; }
-      .icon-github:before { content: '\f055'; }
-      .icon-menu:before { content: '\f0c9'; }
-      .icon-medium:before { content: '\f23a'; }
-
-      .page-hero {
-        position: relative;
-        text-align: center;
-        z-index: 1;
-      }
-
-      .page-title {
-        font-family: 'frente_h1regular', sans-serif;
-        font-size: 5em;
-      }
-
-      .page-title-primary {
-        text-shadow: 2px 2px #E03721;
-      }
-
-      .page-subtitle {
-        text-transform: capitalize;
-        font-weight: 300;
-        font-size: 1.4em;
-        color: #E03721;
-      }
-
-      .octo-container {
-        position: relative;
-        height: 100vh;
-        width: 100vw;
-        padding: 3em;
-        overflow: hidden;
-        color: #F5604C;
-
-        background: #fff8ef; /* Old browsers */
-        background: -moz-radial-gradient(center, ellipse cover,  #fff8ef 0%, #ffd38c 101%); /* FF3.6+ */
-        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fff8ef), color-stop(101%,#ffd38c)); /* Chrome,Safari4+ */
-        background: -webkit-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* Chrome10+,Safari5.1+ */
-        background: -o-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* Opera 12+ */
-        background: -ms-radial-gradient(center, ellipse cover,  #fff8ef 0%,#ffd38c 101%); /* IE10+ */
-        background: radial-gradient(ellipse at center,  #fff8ef 0%,#ffd38c 101%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff8ef', endColorstr='#ffd38c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-      }
-
-      .octo-boat {
-        position: absolute;
-        bottom: 35px;
-        left: 50%;
-        max-height: 110%;
-        max-width: 140%;
-        transform: translate(-50%, 0);
-      }
-
-      .octo-container:after {
-        content: '';
-        position: absolute;
-        bottom: -1px; /* png-generation workaround */
-        left: 0;
-        right: 0;
-        height: 91px;
-        background: url(./img/water.png) repeat-x;
-        background-position: bottom;
-      }
-
-      .page-menu-trigger {
-        color: inherit;
-        position: absolute;
-        z-index: 10;
-        top: 0.5em;
-        left: 0.5em;
-        background: none;
-        border: none;
-        outline: none;
-      }
-
-      .page-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 100vh;
-        right: 100vw;
-        overflow: auto;
-        background: #68BAC9;
-        color: white;
-        z-index: 10;
+    @keyframes slide-up {
+      0% {
         opacity: 0;
-        transition: all 0.25s;
-        visibility: hidden;
-        padding: 3em;
+        transform: translateY(48px);
       }
-
-      .page-menu-container {
-        width: 100vw;
+      75% {
+        opacity: 0;
+        transform: translateY(48px);
       }
-
-      .page-menu.is-page-menu-visible {
-        visibility: visible;
-        bottom: 0;
-        right: 0;
+      100% {
         opacity: 1;
+        transform: translateY(0);
       }
+    }
 
-      .page-nav {
-        margin-top: 1em;
-      }
-
-      .page-nav-link {
-        font-weight: 300;
-        display: block;
-        color: inherit;
-        text-decoration: none;
-        margin-bottom: 1em;
-        font-size: 1.5em;
-      }
-
-      @media screen and (orientation: landscape) {
-        .page-hero {
-          text-align: left;
-        }
-      }
-
-      @media screen
-        and (max-height: 568px)
-        and (orientation: landscape) {
-          .octo-container {
-            padding: 1em;
-          }
-      }
-
-      @media only screen
-        and (max-width: 568px)
-        and (orientation: portrait) {
-          .octo-container {
-            padding: 1em;
-          }
-
-          .page-menu {
-            padding: 2em 1em;
-          }
-      }
-    </style>
+  </style>
 </head>
 <body>
-    <div class="octo-container">
-      <button class="icon-menu page-menu-trigger"></button>
-      <div class="page-hero">
-        <h1 class="page-title page-title-primary">Chris Davies</h1>
-        <p class="page-subtitle">Software architect, doodler</p>
-      </div>
-      <img class="octo-boat" src="./img/octo-boat.svg">
-    </div>
+  <main class="main">
+    <header>
+      <h1 class="title">Christopher Davies</h1>
+    </header>
+    <nav class="page-links">
+      <a class="page-link" href="breakfast.html">Breakfast</a>
+      <a class="page-link" href="binary-clock.html">Binary Clock</a>
+    </nav>
+  </main>
+  <script>
+    (function() {
+      function randomPos() {
+        const neg = Math.random() > 0.5 ? -1 : 1;
+        return (neg * Math.random() * 256);
+      }
 
-    <div class="page-menu">
-      <div class="page-menu-container">
-        <button class="icon-menu page-menu-trigger"></button>
+      function randomizeText(el, className) {
+        const text = el.textContent;
+        el.textContent = '';
+        text.split('').forEach((c, i) => {
+          const char = document.createElement('span');
+          const scale = (Math.random() * (Math.random() * 3));
+          char.className = className;
+          char.style.transform = 'translate(' + randomPos() + 'px, ' + randomPos() + 'px) scale(' + scale + ')';
+          char.style.filter = 'blur(' + scale + 'px)';
+          char.textContent = c;
+          el.appendChild(char);
+        });
+      }
 
-        <h1 class="page-title">Chris Davies</h1>
-
-        <nav class="page-nav">
-          <a class="icon-github page-nav-link" href="https://github.com/chrisdavies">GitHub</a>
-          <a class="icon-twitter page-nav-link" href="https://twitter.com/chrisdaviesgeek">Twitter</a>
-          <a class="icon-medium page-nav-link" href="https://medium.com/@chrisdaviesgeek">Medium</a>
-          <a class="icon-linkedin page-nav-link" href="https://www.linkedin.com/in/christopher-davies-2b8a75126/">LinkedIn</a>
-        </nav>
-      </div>
-    </div>
-
-    <script>
-      document.querySelector('body').addEventListener('click', function (e) {
-        if (e.target.classList.contains('page-menu-trigger')) {
-          document.querySelector('.page-menu').classList.toggle('is-page-menu-visible');
-        }
-      });
-    </script>
+      randomizeText(document.querySelector('.title'), 'title-char');
+    }());
+  </script>
 </body>
 </html>
