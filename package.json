@@ -1,0 +1,20 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "new": "node src/cmd/new.js",
+    "build": "node src/cmd/build.js",
+    "watch": "node src/cmd/watch.js",
+    "serve": "python -m SimpleHTTPServer 8000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "highlight.js": "^9.13.1",
+    "marked": "^0.6.0",
+    "node-watch": "^0.6.0"
+  }
+}
