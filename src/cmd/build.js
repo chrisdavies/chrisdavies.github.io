@@ -10,14 +10,14 @@ const execShell = promisify(childProcess.exec);
 
 
 // The blog article page template
-const articlePage = ({title, content, timestamp, prev, next}) => `<!DOCTYPE html>
+const articlePage = ({title, content, timestamp, prev, next, script}) => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>${title}</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="/blog/main.css">
 </head>
 <body>
   <main class="main">
@@ -39,6 +39,7 @@ const articlePage = ({title, content, timestamp, prev, next}) => `<!DOCTYPE html
       }
     </footer>
   </main>
+  ${script || ''}
 </body>
 </html>
 `;
@@ -52,7 +53,7 @@ const articlesPage = ({articles}) => `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Christopher Davies | Blog</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="/blog/main.css">
 </head>
 <body>
   <main class="main article-list">
@@ -70,25 +71,16 @@ const articlesPage = ({articles}) => `<!DOCTYPE html>
 
 
 // The root /index.html template, just redirects to the latest article
-const rootIndexPage = (url) => `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Christopher Davies | Blog</title>
-  <link rel="stylesheet" href="main.css">
-</head>
-<body>
-  <article class="article">
-    Redirecting to <a href="${url}">${url}</a>.
-    <script>
-      window.location.assign(${JSON.stringify(url)})
-    </script>
-  </article>
-</body>
-</html>
-`;
+const redirectScript = (url) => `<script>
+(function () {
+  var url = ${JSON.stringify(url)};
+  if (window.history && window.history.pushState) {
+    window.history.pushState('', document.title, url);
+  } else {
+    location.assign(url);
+  }
+}());
+</script>`;
 
 
 function readMdFile(mdFile) {
@@ -108,7 +100,7 @@ function loadArticleListItem(mdFile) {
 }
 
 // Convert a markdown file to HTML
-function writeArticle(article, prev, next) {
+function writeArticle(article, prev, next, script) {
   const mdContent = readMdFile(article.mdFile);
   const titleEnd = mdContent.indexOf('\n');
   const content = marked(mdContent.slice(titleEnd), {
@@ -116,14 +108,13 @@ function writeArticle(article, prev, next) {
       return hijs.highlight(lang, code).value;
     },
   });
-  const html = articlePage({
+  return articlePage({
     ...article,
     content,
     prev,
     next,
+    script,
   });
-
-  fs.writeFileSync(`./dist/blog/${article.filename}`, html);
 }
 
 
@@ -141,9 +132,16 @@ async function build() {
     .map(loadArticleListItem)
     .sort((a, b) => b.filename.localeCompare(a.filename));
 
-  articles.forEach((article, i) => writeArticle(article, articles[i-1], articles[i+1]));
+  articles.forEach((article, i) =>
+    fs.writeFileSync(
+      `./dist/blog/${article.filename}`,
+      writeArticle(article, articles[i-1], articles[i+1]),
+    ),
+  );
   fs.writeFileSync(`./dist/blog/index.html`, articlesPage({articles}));
-  fs.writeFileSync(`./dist/index.html`, rootIndexPage(`blog/${articles[0].filename}`));
+  fs.writeFileSync(`./dist/index.html`,
+    writeArticle(articles[0], undefined, articles[1], redirectScript(`blog/${articles[0].filename}`)),
+  );
 
   // TODO: Prolly should optimize CSS via postcss or something...
   fs.copyFileSync('./src/css/main.css', './dist/blog/main.css');
