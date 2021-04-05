@@ -40,9 +40,10 @@
   engine.compositing.onFrame(deltaTime);
   engine.rendering.onFrame();
 
-  <span class="hljs-comment">// Sleep so that we don't go above 60fps.</span>
+  <span class="hljs-comment">// Sleep so that we don&#x27;t go above 60fps.</span>
   sleep(<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, microsecondsPerFrame - deltaTime));
-}</code></pre>
+}
+</code></pre>
 <p>That&#39;s 21 lines of code, and fairly easy to understand. But look at those comments. They are documenting both what <em>and</em> why. Let&#39;s remove them and try to make the code self-documenting.</p>
 <pre><code class="language-js">gameLoop(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderCurrentFrame</span>(<span class="hljs-params">deltaTime</span>) </span>{
   engine.input.onFrame();
@@ -70,7 +71,7 @@
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deltaTimeTracker</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">let</span> prevFrame = highResolutionClock.now();
 
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> {
     <span class="hljs-keyword">const</span> currentFrame = highResolutionClock.now();
     <span class="hljs-keyword">const</span> deltaTime = currentFrame - prevFrame;
     prevFrame = currentFrame;
@@ -84,7 +85,8 @@
   <span class="hljs-keyword">const</span> microsecondsPerFrame = fps + <span class="hljs-number">1000000</span>;
 
   sleep(<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, microsecondsPerFrame - deltaTime));
-}</code></pre>
+}
+</code></pre>
 <p>That&#39;s 40 lines of code, or roughly twice the amount of code as the initial solution. It took a while to write, because I had to think of:</p>
 <ul>
 <li>Logical boundaries for separation</li>
@@ -101,30 +103,31 @@
 <p>Next, we need to test things, so let&#39;s restructure the code a bit to allow for that. While we&#39;re at it, we can object orient it a bit. I won&#39;t bother doing <em>all</em> of the solution. Let&#39;s just focus on <code>preventOvershootingFps</code>. </p>
 <pre><code class="language-js"><span class="hljs-comment">// fps-manager.pseudo</span>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FpsManager</span> </span>{
-  <span class="hljs-keyword">constructor</span>({ fps = <span class="hljs-number">60</span>, sleep = system.sleep } = {}) {
-    <span class="hljs-keyword">this</span>.fps = fps;
-    <span class="hljs-keyword">this</span>.sleep = sleep;
-    <span class="hljs-keyword">this</span>._deltaTime = <span class="hljs-number">0</span>;
+  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">{ fps = <span class="hljs-number">60</span>, sleep = system.sleep } = {}</span>)</span> {
+    <span class="hljs-built_in">this</span>.fps = fps;
+    <span class="hljs-built_in">this</span>.sleep = sleep;
+    <span class="hljs-built_in">this</span>._deltaTime = <span class="hljs-number">0</span>;
   }
 
-  get deltaTime() {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._deltaTime;
+  <span class="hljs-keyword">get</span> <span class="hljs-title">deltaTime</span>() {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>._deltaTime;
   }
 
-  set deltaTime(val) {
-    <span class="hljs-keyword">this</span>._deltaTime = val;
+  <span class="hljs-keyword">set</span> <span class="hljs-title">deltaTime</span>(<span class="hljs-params">val</span>) {
+    <span class="hljs-built_in">this</span>._deltaTime = val;
   }
 
-  preventOvershootingFps() {
-    <span class="hljs-keyword">this</span>.sleep(<span class="hljs-keyword">this</span>.timeRemainingInFrame());
+  <span class="hljs-function"><span class="hljs-title">preventOvershootingFps</span>(<span class="hljs-params"></span>)</span> {
+    <span class="hljs-built_in">this</span>.sleep(<span class="hljs-built_in">this</span>.timeRemainingInFrame());
   }
 
-  private timeRemainingInFrame() {
-    <span class="hljs-keyword">const</span> microsecondsPerFrame = <span class="hljs-keyword">this</span>.fps + <span class="hljs-number">1000000</span>;
+  private <span class="hljs-function"><span class="hljs-title">timeRemainingInFrame</span>(<span class="hljs-params"></span>)</span> {
+    <span class="hljs-keyword">const</span> microsecondsPerFrame = <span class="hljs-built_in">this</span>.fps + <span class="hljs-number">1000000</span>;
 
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, microsecondsPerFrame - <span class="hljs-keyword">this</span>.deltaTime);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, microsecondsPerFrame - <span class="hljs-built_in">this</span>.deltaTime);
   }
-}</code></pre>
+}
+</code></pre>
 <p>That&#39;s nice and testable. We can inject all of the class&#39;s dependencies, and make nice assertions. Never mind that it&#39;s more code than the entirety of our original, commented solution.</p>
 <h2 id="the-complexity-cascade">The complexity cascade</h2>
 <p>Look at how all of those modules are glued together. That&#39;s not terribly flexible or testable, and look at all of those concrete types. Let&#39;s add some interfaces and some dependency injection.</p>

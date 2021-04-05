@@ -18,15 +18,17 @@
 <pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">buildPage</span>(<span class="hljs-params">opts</span>) </span>{
   <span class="hljs-keyword">return</span> {
     <span class="hljs-attr">pageId</span>: opts.newPageId(),
-    <span class="hljs-attr">title</span>: <span class="hljs-string">'Default title'</span>,
-    <span class="hljs-attr">body</span>: <span class="hljs-string">'Write something swank here.'</span>,
+    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Default title&#x27;</span>,
+    <span class="hljs-attr">body</span>: <span class="hljs-string">&#x27;Write something swank here.&#x27;</span>,
   };
-}</code></pre>
+}
+</code></pre>
 <p>At first glance, you&#39;d assume this is a straighforward builder / helper function. You pass it an id generator, and it gives you back the default structure of a &quot;page&quot;. Well, it turns out that <code>newPageId</code> does generate an id, but it also updates another component, which changes some state, which re-renders the React application.</p>
 <p>This violates the principle of least surprise. It&#39;s the wrong behavior.</p>
 <p>In this case, those other components don&#39;t care that you are <em>building</em> a new page. They only care that a new page is <em>added</em> to the system. Unfortunately, my application has no well-defined mechanism for notifying other components when a page is added, so instead, they are notified (and updated) when a new page is being built. Nevermind that you may not end up adding this new page to the system!</p>
 <p>Calling the <code>buildPage</code> function in a loop might produce very poor performance or other undesirable (and maybe unpredictable) behavior:</p>
-<pre><code class="language-js"><span class="hljs-keyword">const</span> newPages = range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>).map(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> buildPage(opts));</code></pre>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> newPages = range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>).map(<span class="hljs-function">() =&gt;</span> buildPage(opts));
+</code></pre>
 <p>A single snippet of surprising code won&#39;t make or break your application. But there is a non-linear combinatorial complexity to such snippets. Two complex, effectful functions produce more than double the complexity of one.</p>
 <p>In <a href="https://www.lulu.com/shop/http://www.lulu.com/shop/zachary-tellman/elements-of-clojure/paperback/product-24261764.html">Elements of Clojure</a>, Zachary Tellman explains that all code is doing some combination of the following things:</p>
 <ul>
@@ -41,7 +43,7 @@
 <p>Let&#39;s take a hypothetical component that needs to react to a page being added. Let&#39;s say it&#39;s a plugin which allows the user to specify a background color for any page, and the color should be whichever color the user last specified, so we can&#39;t simply compute a reasonable default when the page renders. We need to udpate our plugin&#39;s state as soon as a page is added.</p>
 <p>One approach would be to use React&#39;s <code>useEffect</code> <del>footgun</del> hook<sup><a href="#footnote3">[3]</a></sup> for this purpose:</p>
 <pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ColorChooser</span>(<span class="hljs-params">{ pageId, color, setState }</span>) </span>{
-  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  useEffect(<span class="hljs-function">() =&gt;</span> {
     <span class="hljs-keyword">if</span> (!color) {
       setState(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> ({
         ...state,
@@ -53,18 +55,20 @@
     }
   }, [pageId, color, setState]);
 
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SomeThing</span> /&gt;</span>);
-}</span></code></pre>
+  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SomeThing</span> /&gt;</span></span>);
+}
+</code></pre>
 <p>This is messy. There&#39;s highly state-specific stuff here. Using an action / dispatch mechanism would separate the &quot;how&quot; of assignment from the &quot;what&quot;:</p>
 <pre><code class="language-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ColorChooser</span>(<span class="hljs-params">{ pageId, color, dispatch }</span>) </span>{
-  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  useEffect(<span class="hljs-function">() =&gt;</span> {
     <span class="hljs-keyword">if</span> (!color) {
-      dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ASSIGN_PAGE_COLOR'</span>, pageId });
+      dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;ASSIGN_PAGE_COLOR&#x27;</span>, pageId });
     }
   }, [pageId, color, dispatch]);
 
-  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SomeThing</span> /&gt;</span>);
-}</span></code></pre>
+  <span class="hljs-keyword">return</span> (<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SomeThing</span> /&gt;</span></span>);
+}
+</code></pre>
 <p>Better, but we still have the real problem of conflating rendering with responding to state change events. And, what if we change our scrolling mechanism to be lazy so our page isn&#39;t always guaranteed to be rendered? Now, we&#39;re no longer predictably firing off these effects, and our page colors become non-deterministic. This solution is brittle.</p>
 <p>Let&#39;s separate rendering from state changes by placing the state management responsibility in its own module and using rxjs to respond to state changes.</p>
 <pre><code class="language-js"><span class="hljs-comment">// Respond to state changes in a well-defined module, using rxjs or similar</span>
@@ -74,14 +78,16 @@
     <span class="hljs-comment">// Get the list of page ids which have no associated color</span>
     map(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> difference(getPageIds(state), getColorIds(state))),
     filter(<span class="hljs-function"><span class="hljs-params">pageIds</span> =&gt;</span> pageIds.length &gt; <span class="hljs-number">0</span>)
-  ).subscribe(<span class="hljs-function"><span class="hljs-params">pageIds</span> =&gt;</span> dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ASSIGN_PAGE_COLORS'</span>, pageIds }));
-};</code></pre>
+  ).subscribe(<span class="hljs-function"><span class="hljs-params">pageIds</span> =&gt;</span> dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;ASSIGN_PAGE_COLORS&#x27;</span>, pageIds }));
+};
+</code></pre>
 <p>This has a number of advantages over the previous code. Our render functions can now be pure React components: properties in, virtual dom out. Our state changes are isolated. We can test state changes in small units, rather than having to test them alongside the React component lifecycle.</p>
 <p>The downside is, we&#39;ve still got implicit side-effects hanging off of state changes. It might be nice to get rid of the implicitness of the side-effects. One way to do this would be to move to an explicit event-based system.</p>
 <pre><code class="language-js"><span class="hljs-comment">// Respond to events in a well-defined module</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pageColorAssigner</span>(<span class="hljs-params">{ on, dispatch }</span>) </span>{
-  <span class="hljs-keyword">return</span> on(<span class="hljs-string">'PAGE_ADD'</span>, ({ pageIds }) =&gt; dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'ASSIGN_PAGE_COLORS'</span>, pageIds }));
-};</code></pre>
+  <span class="hljs-keyword">return</span> on(<span class="hljs-string">&#x27;PAGE_ADD&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">{ pageIds }</span>) =&gt;</span> dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;ASSIGN_PAGE_COLORS&#x27;</span>, pageIds }));
+};
+</code></pre>
 <p>Here, we&#39;ve changed from a system which reacts to state changes to one which emits and subscribes to explicit events. We can instrument and diagnose things a bit more clearly. Answering the question, &quot;Why did this page color action get dispatched?&quot; would be more straighforward here, since the event subscription system could be told to log its events, and we&#39;d see that the <code>&#39;ASSIGN_PAGE_COLORS&#39;</code> dispatch happened while emitting the <code>&#39;PAGE_ADD&#39;</code> event. There are likely to be additional benefits to being forced to think in a structured way about what kinds of events the system should emit and how they should be processed and controlled vs ad-hoc reactions to state changes.</p>
 <p>An event system has one primary disadvantage vs an observable system, and that is, it reduces the flexibility offered to subscribers. With something like rxjs, I can easily compose rules, such as &quot;When any of these five things change, do X&quot;. This composition is powerful. With a pub/sub event system, you have to hope that the system emits the right kinds of events in order for you to respond appropriately to the changes you are interested in.</p>
 <p>I&#39;m not sure which is preferable. Most of my old Windows applications followed a well-defined event emitter / subscriber system. I suspect that something like rxjs is a reasonable balance between the insanity of managing state via React hooks vs the rigidity of managing state through a structured event system.</p>
