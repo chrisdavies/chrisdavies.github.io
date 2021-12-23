@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const marked = require("marked");
+const { marked } = require("marked");
 const hijs = require("highlight.js");
 const childProcess = require("child_process");
 const { promisify } = require("util");
