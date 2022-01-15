@@ -15,7 +15,7 @@
   "devDependencies": {
     "esbuild": "0.14.8",
     "highlight.js": "11.3.1",
-    "marked": "4.0.8",
+    "marked": "4.0.10",
     "node-watch": "0.7.2"
   }
 }
