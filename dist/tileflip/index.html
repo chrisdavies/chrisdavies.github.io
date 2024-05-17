@@ -99,13 +99,14 @@
 
     function randomLevel() {
       const numMoves = Math.max(2, Math.floor(Math.random() * 7));
-      const moves = [];
-      while (moves.length < numMoves) {
-        const move = Math.floor(Math.random() * size * size);
-        if (moves[moves.length - 1] !== move) {
-          moves.push(move);
-        }
-      }
+      const allMoves = new Array(size * size).fill(0).map((_, i) => i);
+      const swap = (a, b) => {
+        let tmp = allMoves[a];
+        allMoves[a] = allMoves[b];
+        allMoves[b] = tmp;
+      };
+      allMoves.forEach((_, i) => swap(i, Math.floor(Math.random() * allMoves.length)));
+      const moves = allMoves.slice(0, numMoves);
       location.hash = encodeURI(btoa(moves.map((x) => x.toString(32)).join('-')));
     }
 
