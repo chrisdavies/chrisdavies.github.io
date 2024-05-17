@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/tileflip/index.css" />
+  <title>Tileflip</title>
+</head>
+<body>
+  <main>
+    <header class="moves"></header>
+    <game-board></game-board>
+    <footer class="game-options">
+      <button class="start-over"><b>⟲</b><span>Start Over</span></button>
+      <button class="cheat"><b>👁</b><span>Cheat</span></button>
+      <button class="next-level"><span>Next Level</span><b>➜</b></button>
+    </footer>
+  </main>
+  <script>
+    const size = 6;
+    const board = document.querySelector('game-board');
+    let level = [];
+    let movesRemaining = 0;
+
+    board.style.setProperty('--size', size);
+
+    function updateMovesRemaining(numMoves) {
+      movesRemaining = Math.max(0, numMoves);
+      const main = document.querySelector('main');
+      const title = `${movesRemaining} Move${movesRemaining !== 1 ? 's' : ''}`;
+      document.title = title;
+      const movesEl = document.querySelector('.moves');
+      movesEl.textContent = title + ' Remaining';
+
+      if (!document.querySelector('.flipped') && !movesEl.classList.contains('error')) {
+        movesEl.textContent = 'Level complete';
+        main.classList.add('win');
+      } else if (numMoves <= 0) {
+        movesEl.textContent = 'Level failed';
+        main.classList.add('error');
+      } else {
+        main.classList.remove('error', 'win');
+      }
+    }
+
+    function flip(tile) {
+      tile && tile.classList.toggle('flipped');
+    }
+
+    function click(x) {
+      // Flip tiles in our column
+      flip(board.children[x - size]);
+      flip(board.children[x]);
+      flip(board.children[x + size]);
+
+      // If we're not on the left side, flip the column to the left
+      if (x % size) {
+        flip(board.children[x - size - 1]);
+        flip(board.children[x - 1]);
+        flip(board.children[x + size - 1]);
+      }
+
+      // If we're not on the right side, flip the column to the right
+      if (x % size < size - 1) {
+        flip(board.children[x - size + 1]);
+        flip(board.children[x + 1]);
+        flip(board.children[x + size + 1]);
+      }
+    }
+
+    function generateBoard() {
+      for (let x = 0; x < size * size; ++x) {
+        const tile = document.createElement('game-tile');
+        board.append(tile);
+        tile.addEventListener('mousedown', () => {
+          click(x);
+          updateMovesRemaining(movesRemaining - 1);
+        });
+      }
+    }
+
+    function setLevel(moves) {
+      document.title = `${moves.length} Move${moves.length !== 1 ? 's' : ''}`;
+
+      level = moves;
+      board.innerHTML = '';
+      generateBoard();
+      moves.forEach(click);
+
+      updateMovesRemaining(moves.length);
+    }
+
+    function loadLevel() {
+      const hash = location.hash.slice(1);
+      level = atob(decodeURI(hash)).split('-').map((s) => parseInt(s, 32));
+      setLevel(level);
+    }
+
+    function randomLevel() {
+      const numMoves = Math.max(2, Math.floor(Math.random() * 7));
+      const moves = [];
+      while (moves.length < numMoves) {
+        const move = Math.floor(Math.random() * size * size);
+        if (moves[moves.length - 1] !== move) {
+          moves.push(move);
+        }
+      }
+      location.hash = encodeURI(btoa(moves.map((x) => x.toString(32)).join('-')));
+    }
+
+    function attachOptionHandlers() {
+      document.querySelector('.start-over').addEventListener('click', () => {
+        loadLevel();
+      });
+
+      document.querySelector('.next-level').addEventListener('click', () => {
+        randomLevel();
+      });
+
+      document.querySelector('.cheat').addEventListener('click', () => {
+        const show = !board.querySelector('.hint');
+        [...level].reverse().forEach((x, i) => {
+          const tile = board.children[x];
+          tile.innerHTML = show ? `<span class="hint">${i + 1}</span>` : '';
+        });
+      });
+
+      window.addEventListener('hashchange', () => loadLevel(location.hash));
+    }
+
+    attachOptionHandlers();
+
+    location.hash ? loadLevel(location.hash) : randomLevel();
+  </script>
+</body>
+</html>
