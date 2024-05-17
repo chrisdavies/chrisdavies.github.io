@@ -12,9 +12,9 @@
     <header class="moves"></header>
     <game-board></game-board>
     <footer class="game-options">
-      <button class="start-over"><b>⟲</b><span>Start Over</span></button>
-      <button class="cheat"><b>👁</b><span>Cheat</span></button>
-      <button class="next-level"><span>Next Level</span><b>➜</b></button>
+      <button class="start-over"><span>Start Over</span></button>
+      <button class="cheat"><span>Cheat</span></button>
+      <button class="next-level"><span>Next Level</span></button>
     </footer>
   </main>
   <script>
@@ -108,6 +108,12 @@
       allMoves.forEach((_, i) => swap(i, Math.floor(Math.random() * allMoves.length)));
       const moves = allMoves.slice(0, numMoves);
       location.hash = encodeURI(btoa(moves.map((x) => x.toString(32)).join('-')));
+
+      /*
+      A game has 2-7 moves
+      const 
+
+       */
     }
 
     function attachOptionHandlers() {
