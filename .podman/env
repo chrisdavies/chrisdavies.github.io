@@ -1,0 +1,6 @@
+# Configure additional flags which will be passed to podman run
+export DEV_FLAGS="-p 127.0.0.1:3000:3000"
+
+# Control whether ~/.bashrc and ~/.config/nvim/init.lua are copied into the container
+DEV_AUTOCONFIG=true
+
